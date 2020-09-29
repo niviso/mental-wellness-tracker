@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mental-wellness-tracker",
-    "slug": "mental-wellness-tracker",
+    "name": "Mental wellness tracker",
+    "slug": "mwt",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,6 +21,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": ["ts","tsx", "js","sass","scss"]
     }
   }
 }
