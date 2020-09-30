@@ -2,7 +2,7 @@ import React,{useState,useEffect,useContext} from 'react';
 import {Text,View,TouchableOpacity} from 'react-native';
 import {AppContext} from '../../context/appContext';
 import Styles from './style.scss';
-export default function MoodPicker() {
+export default function Range() {
   const [state,setState] = useContext(AppContext);
   const [mood,setMood] = useState(null);
   const UpdateMood = (n) => {
@@ -14,7 +14,7 @@ export default function MoodPicker() {
     setState(tmp);
   }
   useEffect(() => {
-    if(state.data[state.currentDate]){
+    if(state.data[state.currentDate][i].){
       setMood(state.data[state.currentDate].mood);
     } else{
       setMood(null);

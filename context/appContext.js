@@ -9,8 +9,15 @@ const AppProvider = (props) => {
     currentDate: moment().format('YYYY-MM-DD'),
     data:{
       '2020-09-29': {mood: 0,diary: "test"}
-    }
-
+    },
+    pattern:[
+      {
+        id: "1",
+        type: 'range',
+        headline: 'test',
+        values: [0,1,2,3,4,5]
+      },
+    ]
   });
 
   return (
