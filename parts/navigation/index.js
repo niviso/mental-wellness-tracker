@@ -19,13 +19,20 @@ export default function Navigation() {
   return (
     <View style={Styles.body}>
     <TouchableOpacity style={Styles.cell}>
-    <Text style={{...Styles.cellFont, fontWeight: selected == 0 ? '700' : '300'}}>📅{"\n"}Overview</Text>
+    <Text style={Styles.cellIconFont}>📅</Text>
+    <Text style={{...Styles.cellFont, fontWeight: selected == 0 ? '700' : '300'}}>Diary</Text>
     </TouchableOpacity>
     <TouchableOpacity style={Styles.cell}>
-    <Text style={{...Styles.cellFont, fontWeight: selected == 1 ? '700' : '300'}}>☺{"\n"}Status</Text>
+    <Text style={Styles.cellIconFont}>☺</Text>
+    <Text style={{...Styles.cellFont, fontWeight: selected == 1 ? '700' : '300'}}>Reminders</Text>
     </TouchableOpacity>
     <TouchableOpacity style={Styles.cell}>
-    <Text style={{...Styles.cellFont, fontWeight: selected == 2 ? '700' : '300'}}>⚙️{"\n"}Settings</Text>
+    <Text style={Styles.cellIconFont}>📈</Text>
+    <Text style={{...Styles.cellFont, fontWeight: selected == 1 ? '700' : '300'}}>Analytics</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={Styles.cell}>
+    <Text style={Styles.cellIconFont}>⚙️</Text>
+    <Text style={{...Styles.cellFont, fontWeight: selected == 2 ? '700' : '300'}}>Settings</Text>
     </TouchableOpacity>
     </View>
   );

@@ -2,29 +2,38 @@ import React,{useState,useEffect,useContext,useRef} from 'react';
 import {Text,View,TouchableOpacity,TextInput,Keyboard} from 'react-native';
 import {AppContext} from '../../context/appContext';
 import Styles from './style.scss';
-export default function Diary() {
+export default function Input(props) {
   const [state,setState] = useContext(AppContext);
   const [text,setText] = useState(null);
   const inputEl = useRef(null);
-  const OnChange = (s) => {
+  const {data} = props;
+  const OnChange = (n) => {
     var tmp = JSON.parse(JSON.stringify(state));
-    if(!tmp.data[state.currentDate]){
+    if(!state.data[state.currentDate]){
       tmp.data[state.currentDate] = {}
     }
-    tmp.data[state.currentDate].diary = s;
+    if(!tmp.data[state.currentDate][data.id]){
+      tmp.data[state.currentDate][data.id] = {value: n}
+    } else {
+    tmp.data[state.currentDate][data.id].value = n;
+    }
     setState(tmp);
   }
   useEffect(() => {
-    if(state.data[state.currentDate]){
-      setText(state.data[state.currentDate].diary);
+    if(state.data[state.currentDate] && state.data[state.currentDate][data.id]){
+      setText(state.data[state.currentDate][data.id].value);
     } else{
-      setText(null);
+      setText(0);
     }
   });
+
+
+
+
   return (
     <View style={Styles.wrapper}>
     <Text style={Styles.header}>
-    Tell me about your day
+    {data.headline}
     </Text>
     <TextInput style={Styles.Input}
     multiline={true}

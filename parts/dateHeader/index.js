@@ -10,7 +10,7 @@ export default function DateHeader() {
     setState({...state,currentDate:newDate});
   }
   return (
-    <View style={{...Styles.body,backgroundColor: state.data[state.currentDate] && state.data[state.currentDate].mood == 1 ? '#44ba5d' : 'silver'}}>
+    <View style={Styles.body}>
     <View style={Styles.wrapper}>
     <TouchableOpacity style={Styles.cellSide} onPress={() => UpdateDate(-1)}>
     <Text style={Styles.textSize}>←</Text>
@@ -22,6 +22,7 @@ export default function DateHeader() {
     <Text style={Styles.textSize}>→</Text>
     </TouchableOpacity>
     </View>
+    <Text style={Styles.textSizeSmall}>{moment(state.currentDate).format('dddd')}</Text>
     </View>
   );
 }

@@ -6,8 +6,9 @@
   align-items: center;
   border-bottom-left-radius: 100%;
   border-bottom-right-radius: 100%;
-  background-color: transparent;
+  background-color: #343a40;
   opacity: 0.8;
+  border: 1px solid black;
 }
 .wrapper{
   width: 100%;
@@ -33,4 +34,10 @@
 .textSize{
   font-size: 30;
   font-weight: 300;
+  color: white;
+}
+.textSizeSmall{
+  font-size: 20;
+  font-weight: 500;
+  color: white;
 }
