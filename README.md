@@ -1,5 +1,10 @@
 Icons used in app and graphics made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
+## Features
+- Saves data encrypted offline on your device
+- Lets you create a custom diary suiting your needs
+- Easy and intuitive UI
+
 ## Preview
 <div style="display: flex;flex-direction: row;flex-wrap:wrap">
   <img src="https://user-images.githubusercontent.com/20905714/95003547-b1e01d00-05e0-11eb-9327-eca0a129bb90.png" alt="drawing" width="200" style="margin: 5px"/>
