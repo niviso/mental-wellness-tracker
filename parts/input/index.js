@@ -6,7 +6,7 @@ export default function Input(props) {
   const [state,setState] = useContext(AppContext);
   const [text,setText] = useState(null);
   const inputEl = useRef(null);
-  const {data} = props;
+  const {data,edit,preview} = props;
   const OnChange = (n) => {
     var tmp = JSON.parse(JSON.stringify(state));
     if(!state.data[state.currentDate]){
@@ -20,10 +20,12 @@ export default function Input(props) {
     setState(tmp);
   }
   useEffect(() => {
-    if(state.data[state.currentDate] && state.data[state.currentDate][data.id]){
-      setText(state.data[state.currentDate][data.id].value);
-    } else{
-      setText(0);
+    if(!preview){
+      if(state.data[state.currentDate] && state.data[state.currentDate][data.id]){
+        setText(state.data[state.currentDate][data.id].value);
+      } else{
+        setText(0);
+      }
     }
   });
 
@@ -33,7 +35,7 @@ export default function Input(props) {
   return (
     <View style={Styles.wrapper}>
     <Text style={Styles.header}>
-    {data.headline}
+    {preview ? 'preview' : data.headline}
     </Text>
     <TextInput style={Styles.Input}
     multiline={true}

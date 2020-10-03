@@ -25,3 +25,33 @@
   width: 100%;
   z-index: 1;
 }
+
+.typeWrapper{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.editFrame{
+  background: #db220a;
+  width: 15%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.editFrameText{
+  font-size: 15;
+  transform: rotate(90deg);
+  color: white;
+}
+.editWrapper{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
