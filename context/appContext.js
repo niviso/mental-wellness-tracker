@@ -7,6 +7,9 @@ const AppProvider = (props) => {
   const [appState, setAppState] = useState({
     currentDate: moment().format('YYYY-MM-DD'),
     editing: false,
+    status:{
+      mood: 'sad' //happy,normal,sad
+    },
     data:{
       '2020-10-01': {
         '1': {
@@ -18,12 +21,12 @@ const AppProvider = (props) => {
       {
         id: "1",
         type: 'range',
-        headline: 'How do you feel today?',
+        headline: 'How are you feeling today?',
       },
       {
         id: "3",
         type: 'input',
-        headline: 'Diary',
+        headline: 'Notes about today',
       }
     ]
   });

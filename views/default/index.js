@@ -4,11 +4,12 @@ import Styles from './style.scss';
 import DateHeader from '../../parts/dateHeader';
 import Range from '../../parts/range';
 import Input from '../../parts/input';
+import Slider from '../../parts/slider';
 import Navigation from '../../parts/navigation';
 import {AppContext} from '../../context/appContext';
 import { SimpleAnimation } from 'react-native-simple-animations';
-import Icon from 'react-native-ionicons'
-
+import {Edit,Exit,Plus,Acorn,Bee,Onion,Rainy,Delete} from '../../parts/icon/icons';
+import Icon from '../../parts/icon/';
 export default function Default() {
   const [state,setState] = useContext(AppContext);
   const [addView,setAddView] = useState(true);
@@ -26,6 +27,9 @@ export default function Default() {
 }
   const ToggleEdit = () => {
     setState({...state,editing: !state.editing});
+    setTimeout(()=>{
+      scrollView.current.scrollTo({y: 0, animated: true });
+    },250);
   }
   const RemoveObj = (id) => {
     let patternCopy = JSON.parse(JSON.stringify(state.pattern));
@@ -35,7 +39,7 @@ export default function Default() {
     setState({...state,pattern: result});
   }
   const Add = (type) => {
-    const newPattern = [...state.pattern, {id: Guid(),type:type,headline:'new '+type }];
+    const newPattern = [...state.pattern, {id: Guid(),type:type,headline:'Custom ' + type }];
     setState({...state, pattern: newPattern});
     setTimeout(()=>{
       scrollView.current.scrollToEnd({ animated: true });
@@ -44,9 +48,9 @@ export default function Default() {
   }
   const GetEditFrame = (obj) => {
     return (
-      <SimpleAnimation style={Styles.editFrame} duration={250} aim="in" distance={1000} movementType="slide" direction="right">
-
-      <TouchableOpacity onPress={() => RemoveObj(obj.id)}>
+      <SimpleAnimation style={Styles.editFrame} duration={1000} aim="in" distance={1000} movementType="slide" direction="right">
+      <TouchableOpacity onPress={() => RemoveObj(obj.id)} style={Styles.DeleteWrapper}>
+      <Icon source={Delete} size={15}/>
         <Text style={Styles.editFrameText}>Delete</Text>
       </TouchableOpacity>
       </SimpleAnimation>
@@ -61,6 +65,9 @@ export default function Default() {
     if(obj.type == 'input'){
       return <Input data={obj}/>
     }
+    if(obj.type == 'slider'){
+      return <Slider data={obj}/>
+    }
   }
 
   const GetObj = (obj,index) => {
@@ -68,7 +75,7 @@ export default function Default() {
     return (
       <View key={index} style={{...Styles.typeWrapper}}>
         {state.editing && GetEditFrame(obj)}
-        <View style={{ width: state.editing ? '85%' : '100%'}}>
+        <View style={{ width: '100%',marginBottom: 25}}>
           {type}
         </View>
       </View>
@@ -81,26 +88,10 @@ export default function Default() {
 
   return (
     <View style={Styles.body}>
-    <ScrollView style={Styles.wrapper} ref={scrollView}>
+    <ScrollView style={Styles.wrapper} ref={scrollView} showsVerticalScrollIndicator ={false} showsHorizontalScrollIndicator={false}>
     <View style={{...Styles.paddingWrapper}}>
-    <TouchableOpacity onPress={() => ToggleEdit()} style={Styles.editWrapper}>
-      <Text style={{color: 'black',fontSize: 15}}>{state.editing ? 'Stop edit' : 'Edit this view'}</Text>
-    </TouchableOpacity>
       { data }
-      {addView && (
-        <View>
-        <TouchableOpacity onPress={() => Add('input')}>
-        <Text><Icon ios="ios-add" android="md-add" />new input </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => Add('range')}>
-        <Text>new range </Text>
-        </TouchableOpacity>
-        </View>
-      ) }
       </View>
-      <TouchableOpacity onPress={() => setAddView(true)} style={Styles.editWrapper}>
-        <Text style={{color: 'black',fontSize: 15}}>Add</Text>
-      </TouchableOpacity>
     </ScrollView>
     <View style={Styles.datePicker}>
       <DateHeader/>
@@ -108,6 +99,41 @@ export default function Default() {
     <View style={Styles.navigation}>
       <Navigation/>
     </View>
+    <TouchableOpacity onPress={() => ToggleEdit()} style={Styles.EditBtn}>
+      <Icon size={30} source={state.editing ? Exit : Edit}/>
+    </TouchableOpacity>
+
+    {state.editing && (
+
+      <SimpleAnimation style={Styles.AddBtn} duration={1000} aim="in" distance={1000} movementType="slide" direction="left">
+      <ScrollView style={{width: '100%',overflow: 'hidden',borderRadius: 25}} directionalLockEnabled horizontal   showsVerticalScrollIndicator ={false} showsHorizontalScrollIndicator={false}>
+    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('input')}>
+      <Icon size={30} source={Acorn}/>
+      <Text style={Styles.AddBtnOptionLabel}>Text field</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('slider')}>
+    <Icon size={30} source={Bee}/>
+    <Text style={Styles.AddBtnOptionLabel}>Slider</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('slider')}>
+    <Icon size={30} source={Onion}/>
+    <Text style={Styles.AddBtnOptionLabel}>Range</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('range')}>
+    <Icon size={30} source={Rainy}/>
+    <Text style={Styles.AddBtnOptionLabel}>Draw</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('range')}>
+    <Icon size={30} source={Bee}/>
+    <Text style={Styles.AddBtnOptionLabel}>Vote</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('range')}>
+    <Icon size={30} source={Bee}/>
+    <Text style={Styles.AddBtnOptionLabel}>Vote</Text>
+    </TouchableOpacity>
+    </ScrollView>
+    </SimpleAnimation>
+    )}
     </View>
   );
 }

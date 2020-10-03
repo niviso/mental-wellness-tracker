@@ -44,6 +44,7 @@ export default function Input(props) {
     ref={inputEl}
     onSubmitEditing={Keyboard.dismiss}
     maxLength={300}
+    placeholder="Write something ..."
     numberOfLines={4}/>
     </View>
   );

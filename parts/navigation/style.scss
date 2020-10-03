@@ -1,7 +1,7 @@
 .body{
 
   height: 85px;
-  background: #343a40;
+  background: #fafafa;
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -10,6 +10,9 @@
   padding-left: 5px;
   padding-right: 5px;
   padding-bottom: 20px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: black;
 
 
 }
@@ -22,7 +25,8 @@
 .cellFont{
   font-size: 13;
   text-align: center;
-  color: white;
+  color: black;
+  margin-top: 5px;
 }
 .cellIconFont{
   font-size: 16;

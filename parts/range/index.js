@@ -1,7 +1,11 @@
 import React,{useState,useEffect,useContext} from 'react';
-import {Text,View,TouchableOpacity} from 'react-native';
+import {Text,View,TouchableOpacity,TouchableHighlight} from 'react-native';
 import {AppContext} from '../../context/appContext';
 import Styles from './style.scss';
+import Icon from '../icon/';
+import {Apple,Rainy,Onion} from  '../icon/icons';
+import { SimpleAnimation } from 'react-native-simple-animations';
+
 export default function Range(props) {
   const [state,setState] = useContext(AppContext);
   const [mood,setMood] = useState(null);
@@ -25,28 +29,26 @@ export default function Range(props) {
       setMood(0);
     }
   });
+  const values = [1,2,3,4,5];
+  const btns = values.map((obj,index) => {
+    return (
+      <TouchableHighlight onPress={() => Update(obj)} style={{...Styles.button, opacity: mood == obj ? 1 : 0.7}}>
+      <>
+
+      {mood == obj && (<SimpleAnimation duration={1000} aim="in" distance={500} staticType='bounce' style={{position:'absolute',opacity: 0.6}}><Icon size={100} source={Onion} /></SimpleAnimation>)}
+        <Text style={{...Styles.buttonText,color: mood == obj ? 'indigo' : 'indigo',fontWeight: mood == obj ? '900' : '300' }}>
+        {obj}
+        </Text>
+        </>
+        </TouchableHighlight>);
+  })
   return (
     <View style={Styles.body}>
     <Text style={Styles.header}>
     {data.headline}
     </Text>
     <View style={Styles.wrapper}>
-    <TouchableOpacity onPress={() => Update(1)} style={{...Styles.button,backgroundColor: mood == 1 ? '#44ba5d' : 'white' }}>
-    <Text style={Styles.buttonText}>
-    1
-    </Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity onPress={() => Update(0)} style={{...Styles.button,backgroundColor: mood == 0 ? '#fff98b' : 'white' }}>
-    <Text style={Styles.buttonText}>
-    0
-    </Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={() => Update(-1)} style={{...Styles.button,backgroundColor: mood == -1 ? '#D54F60' : 'white' }}>
-    <Text style={Styles.buttonText}>
-    -1
-    </Text>
-    </TouchableOpacity>
+    {btns}
     </View>
     </View>
   );

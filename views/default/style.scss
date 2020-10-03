@@ -6,8 +6,10 @@
   width: 100%;
 }
 .paddingWrapper{
-  margin-top: 175px;
-  margin-bottom: 175px;
+  margin-top: 250px;
+  margin-bottom: 100px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .navigation{
@@ -27,6 +29,7 @@
 }
 
 .typeWrapper{
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -35,18 +38,32 @@
   margin-bottom: 10px;
 }
 .editFrame{
-  background: #db220a;
-  width: 15%;
-  height: 100%;
+  position: absolute;
+  left:0%;
+  z-index: 99;
+  border: 1px solid #343a40;
+  background-color: rgba(255,255,255,0.9);
+  width: 90px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  border-bottom-right-radius: 25px;
+  border-top-right-radius: 25px;
+  padding-right: 20px;
+}
+.DeleteWrapper{
+  display: flex;
+  width: 100%;
+    align-items: center;
+    justify-content: center;
+  flex-direction: row;
 }
 .editFrameText{
-  font-size: 15;
-  transform: rotate(90deg);
-  color: white;
+  font-size: 10;
+  color: black;
+  margin-left: 5px;
 }
 .editWrapper{
   width: 100%;
@@ -54,4 +71,46 @@
   justify-content: center;
   align-items: center;
   margin: 10px;
+}
+.EditBtn{
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top:25%;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  right:0%;
+  border: 1px solid #343a40;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255,255,255,0.9);
+}
+.AddBtn{
+  height: 65px;
+  position: absolute;
+  top:80%;
+  border-radius: 25px;
+  left:10%;
+  width: 80%;
+  border: 1px solid #343a40;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  background-color: rgba(255,255,255,0.9);
+  overflow: hidden;
+}
+.AddBtnOption{
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 55px;
+}
+.AddBtnOptionLabel{
+  font-size: 12;
 }
