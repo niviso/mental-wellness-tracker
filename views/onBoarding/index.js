@@ -3,9 +3,16 @@ import {View,ScrollView,TouchableOpacity,Text} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import {Edit,Exit,Plus,Heart,Acorn,Bee,Onion,Rainy,Statistics,AppIcon,Sunflower,Home} from '../../parts/icon/icons';
 import Icon from '../../parts/icon/';
+import AsyncStorageHelper from '../../helpers/asyncStorageHelper';
 
 export default function OnBoarding(props){
   const {setView} = props;
+  const Done = () => {
+    AsyncStorageHelper.set("mwtracker_data",JSON.stringify({pattern: [],data: {}})).then(result => {
+        setView('default');
+    });
+
+  }
   return (
     <Onboarding
   pages={[
@@ -52,8 +59,8 @@ export default function OnBoarding(props){
       subtitle: 'Start improving your mental wellbeing.\n\n\n\n\n\n',
     }
   ]}
-  onDone={() => setView('default')}
-  onSkip={() => setView('default')}
+  onDone={() => Done()}
+  onSkip={() => Done()}
   containerStyles={{paddingLeft: 20,paddingRight: 20}}
 />
   )

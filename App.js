@@ -12,15 +12,19 @@ import Styles from './styles.scss';
 import AsyncStorageHelper from './helpers/asyncStorageHelper';
 export default function App(){
   const [view,setView] = useState('loading');
+  const [loaded,setLoaded] = useState(false);
 
     useEffect(() => {
-        AsyncStorageHelper.get("mtracker_data").then(result => {
+      if(!loaded){
+        AsyncStorageHelper.get("mwtracker_data").then(result => {
+          setLoaded(true);
           if(result){
             setView('default');
           } else {
             setView('onboarding');
           }
         });
+      }
     });
 
   return (

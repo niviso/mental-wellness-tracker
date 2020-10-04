@@ -9,11 +9,11 @@ const Sunflower = require('../../assets/icons/mood/sunflower.png');
 const Edit = require('../../assets/icons/ui/edit.png');
 const Exit = require('../../assets/icons/ui/crossed.png');
 const Plus = require('../../assets/icons/ui/plus.png');
-const Delete = require('../../assets/icons/ui/bin.png');
+const Trash = require('../../assets/icons/ui/bin.png');
 const Heart = require('../../assets/icons/ui/loving.png');
 const Settings = require('../../assets/icons/ui/dashboard.png');
 const Statistics = require('../../assets/icons/ui/statistics.png');
 const Home = require('../../assets/icons/ui/home.png');
 const AppIcon = require('../../assets/icon.png');
 
-export {Apple,Bee,Acorn,Rainy,Onion,Edit,Exit,Plus,Delete,Statistics,Settings,Heart,Home,AppIcon,Sunflower};
+export {Apple,Bee,Acorn,Rainy,Onion,Edit,Exit,Plus,Trash,Statistics,Settings,Heart,Home,AppIcon,Sunflower};

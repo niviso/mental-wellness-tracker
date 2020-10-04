@@ -2,8 +2,10 @@
   "expo": {
     "name": "Mental wellness tracker",
     "slug": "mwt",
+    "privacy": "unlisted",
     "version": "1.0.0",
     "orientation": "portrait",
+    "description":"Mental wellness tracker is a diary type app were you can fill in your daily objectives and evalute that data.",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",

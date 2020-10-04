@@ -9,7 +9,7 @@ import Slider from '../../parts/slider';
 import Navigation from '../../parts/navigation';
 import {AppContext} from '../../context/appContext';
 import { SimpleAnimation } from 'react-native-simple-animations';
-import {Edit,Exit,Plus,Acorn,Bee,Onion,Sunflower,Rainy,Delete} from '../../parts/icon/icons';
+import {Edit,Exit,Plus,Acorn,Bee,Onion,Sunflower,Rainy,Trash} from '../../parts/icon/icons';
 import Icon from '../../parts/icon/';
 import AsyncStorageHelper from '../../helpers/asyncStorageHelper';
 
@@ -103,7 +103,7 @@ export default function Default(props) {
     return (
       <SimpleAnimation style={Styles.editFrame} duration={1000} aim="in" distance={1000} movementType="slide" direction="right">
       <TouchableOpacity onPress={() => RemoveObj(obj)} style={Styles.DeleteWrapper}>
-      <Icon source={Delete} size={15}/>
+      <Icon source={Trash} size={15}/>
         <Text style={Styles.editFrameText}>Delete</Text>
       </TouchableOpacity>
       </SimpleAnimation>
@@ -139,14 +139,14 @@ export default function Default(props) {
   }
   const Save = () => {
     setTimeout(()=>{
-      AsyncStorageHelper.set("mtracker_data",JSON.stringify({data: state.data,pattern: state.pattern}));
+      AsyncStorageHelper.set("mwtracker_data",JSON.stringify({data: state.data,pattern: state.pattern}));
     },1000);
   }
 
   useEffect(() => {
     if(!state.loaded){
       let tmpState = JSON.parse(JSON.stringify(state));
-      AsyncStorageHelper.get("mtracker_data").then(result => {
+      AsyncStorageHelper.get("mwtracker_data").then(result => {
         if(result){
           result = JSON.parse(result);
           tmpState.pattern = result.pattern;
