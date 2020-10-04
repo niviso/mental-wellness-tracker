@@ -36,7 +36,7 @@ export default function DateHeader() {
     <Text style={Styles.textSize}>→</Text>
     </TouchableOpacity>
     </View>
-    <Text style={Styles.textSizeSmall}>{moment(state.currentDate).format('dddd')}</Text>
+    <Text style={Styles.textSizeSmall}>{state.editing ? 'EDITING' : moment(state.currentDate).format('dddd')}</Text>
     </View>
   );
 }

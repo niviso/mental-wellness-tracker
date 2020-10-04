@@ -1,19 +1,21 @@
 import React,{useState,useEffect,useContext,useRef} from 'react';
-import {View,ScrollView,TouchableOpacity,Text} from 'react-native';
+import {View,ScrollView,TouchableOpacity,Text,Alert,Touch,TouchableWithoutFeedback } from 'react-native';
 import Styles from './style.scss';
 import DateHeader from '../../parts/dateHeader';
 import Range from '../../parts/range';
 import Input from '../../parts/input';
+import Vote from '../../parts/vote';
 import Slider from '../../parts/slider';
 import Navigation from '../../parts/navigation';
 import {AppContext} from '../../context/appContext';
 import { SimpleAnimation } from 'react-native-simple-animations';
 import {Edit,Exit,Plus,Acorn,Bee,Onion,Rainy,Delete} from '../../parts/icon/icons';
 import Icon from '../../parts/icon/';
-export default function Default() {
+export default function Default(props) {
   const [state,setState] = useContext(AppContext);
   const [addView,setAddView] = useState(true);
   const scrollView = useRef(null);
+  const {setView} = props;
 
   const Guid = () => {
     function chr4(){
@@ -31,7 +33,55 @@ export default function Default() {
       scrollView.current.scrollTo({y: 0, animated: true });
     },250);
   }
+
+  const UpdateHeader = (obj) => {
+    if(!state.editing) {
+      return;
+    }
+    Alert.prompt(
+      "New header for " + obj.type,
+      "This will replace the old header",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "Update",
+          onPress: header => SetHeader(obj.id,header)
+        }
+      ],
+      "plain-text"
+    );
+  }
+
+  const SetHeader = (id,header) => {
+    const newPattern = JSON.parse(JSON.stringify(state.pattern));
+    for(let i = 0; i!== newPattern.length;i++){
+      if(newPattern[i].id == id){
+        newPattern[i].headline = header;
+      }
+    }
+    setState({...state, pattern: newPattern});
+  }
   const RemoveObj = (id) => {
+    Alert.alert(
+      "Are you sure?",
+      "All data for this item will be removed.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "I am sure", onPress: () => Delete(id) }
+      ],
+      { cancelable: false }
+    );
+  }
+
+  const Delete = (id) => {
     let patternCopy = JSON.parse(JSON.stringify(state.pattern));
     let result = patternCopy.filter(obj => {
         return obj.id !== id
@@ -68,17 +118,20 @@ export default function Default() {
     if(obj.type == 'slider'){
       return <Slider data={obj}/>
     }
+    if(obj.type == 'vote'){
+      return <Vote data={obj}/>
+    }
   }
 
   const GetObj = (obj,index) => {
     const type = GetType(obj);
     return (
-      <View key={index} style={{...Styles.typeWrapper}}>
+      <TouchableOpacity key={index} style={{...Styles.typeWrapper}} onLongPress={() => UpdateHeader(obj)} activeOpacity={state.editing ? 0.5 : 1}>
         {state.editing && GetEditFrame(obj)}
         <View style={{ width: '100%',marginBottom: 25}}>
           {type}
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 
@@ -115,21 +168,21 @@ export default function Default() {
     <Icon size={30} source={Bee}/>
     <Text style={Styles.AddBtnOptionLabel}>Slider</Text>
     </TouchableOpacity>
-    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('slider')}>
+    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('range')}>
     <Icon size={30} source={Onion}/>
     <Text style={Styles.AddBtnOptionLabel}>Range</Text>
     </TouchableOpacity>
-    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('range')}>
+    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('vote')}>
     <Icon size={30} source={Rainy}/>
-    <Text style={Styles.AddBtnOptionLabel}>Draw</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('range')}>
-    <Icon size={30} source={Bee}/>
     <Text style={Styles.AddBtnOptionLabel}>Vote</Text>
     </TouchableOpacity>
     <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('range')}>
     <Icon size={30} source={Bee}/>
-    <Text style={Styles.AddBtnOptionLabel}>Vote</Text>
+    <Text style={Styles.AddBtnOptionLabel}>TBA</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('range')}>
+    <Icon size={30} source={Bee}/>
+    <Text style={Styles.AddBtnOptionLabel}>TBA</Text>
     </TouchableOpacity>
     </ScrollView>
     </SimpleAnimation>
