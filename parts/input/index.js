@@ -22,9 +22,9 @@ export default function Input(props) {
   useEffect(() => {
     if(!preview){
       if(state.data[state.currentDate] && state.data[state.currentDate][data.id]){
-        setText(state.data[state.currentDate][data.id].value);
+        setText(state.data[state.currentDate][data.id].value.toString());
       } else{
-        setText(0);
+        setText("");
       }
     }
   });

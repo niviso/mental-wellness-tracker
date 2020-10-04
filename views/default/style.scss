@@ -6,10 +6,13 @@
   width: 100%;
 }
 .paddingWrapper{
-  margin-top: 250px;
+  margin-top: 280px;
   margin-bottom: 100px;
   padding-left: 10px;
   padding-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .navigation{

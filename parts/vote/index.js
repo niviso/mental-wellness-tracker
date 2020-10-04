@@ -32,7 +32,7 @@ export default function Range(props) {
   const values = ['Yes','No'];
   const btns = values.map((obj,index) => {
     return (
-      <TouchableHighlight onPress={() => Update(obj)} style={{...Styles.button, opacity: mood == obj ? 1 : 0.7}}>
+      <TouchableHighlight key={index} onPress={() => Update(obj)} style={{...Styles.button, opacity: mood == obj ? 1 : 0.7}}>
       <>
 
       {mood == obj && (<SimpleAnimation duration={1000} aim="in" distance={500} staticType='bounce' style={{position:'absolute',opacity: 0.6}}><Icon size={60} source={mood == 'Yes' ? Apple : Rainy} /></SimpleAnimation>)}

@@ -9,8 +9,10 @@ import Slider from '../../parts/slider';
 import Navigation from '../../parts/navigation';
 import {AppContext} from '../../context/appContext';
 import { SimpleAnimation } from 'react-native-simple-animations';
-import {Edit,Exit,Plus,Acorn,Bee,Onion,Rainy,Delete} from '../../parts/icon/icons';
+import {Edit,Exit,Plus,Acorn,Bee,Onion,Sunflower,Rainy,Delete} from '../../parts/icon/icons';
 import Icon from '../../parts/icon/';
+import AsyncStorageHelper from '../../helpers/asyncStorageHelper';
+
 export default function Default(props) {
   const [state,setState] = useContext(AppContext);
   const [addView,setAddView] = useState(true);
@@ -39,7 +41,7 @@ export default function Default(props) {
       return;
     }
     Alert.prompt(
-      "New header for " + obj.type,
+      "New headline for " + obj.type,
       "This will replace the old header",
       [
         {
@@ -65,9 +67,9 @@ export default function Default(props) {
     }
     setState({...state, pattern: newPattern});
   }
-  const RemoveObj = (id) => {
+  const RemoveObj = (obj) => {
     Alert.alert(
-      "Are you sure?",
+      "Are you sure you want to remove " + obj.type + " object?",
       "All data for this item will be removed.",
       [
         {
@@ -75,10 +77,11 @@ export default function Default(props) {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "I am sure", onPress: () => Delete(id) }
+        { text: "I am sure", onPress: () => Delete(obj.id) }
       ],
       { cancelable: false }
     );
+
   }
 
   const Delete = (id) => {
@@ -99,7 +102,7 @@ export default function Default(props) {
   const GetEditFrame = (obj) => {
     return (
       <SimpleAnimation style={Styles.editFrame} duration={1000} aim="in" distance={1000} movementType="slide" direction="right">
-      <TouchableOpacity onPress={() => RemoveObj(obj.id)} style={Styles.DeleteWrapper}>
+      <TouchableOpacity onPress={() => RemoveObj(obj)} style={Styles.DeleteWrapper}>
       <Icon source={Delete} size={15}/>
         <Text style={Styles.editFrameText}>Delete</Text>
       </TouchableOpacity>
@@ -126,7 +129,7 @@ export default function Default(props) {
   const GetObj = (obj,index) => {
     const type = GetType(obj);
     return (
-      <TouchableOpacity key={index} style={{...Styles.typeWrapper}} onLongPress={() => UpdateHeader(obj)} activeOpacity={state.editing ? 0.5 : 1}>
+      <TouchableOpacity key={Guid()} style={{...Styles.typeWrapper}} onLongPress={() => UpdateHeader(obj)} activeOpacity={state.editing ? 0.5 : 1}>
         {state.editing && GetEditFrame(obj)}
         <View style={{ width: '100%',marginBottom: 25}}>
           {type}
@@ -134,6 +137,29 @@ export default function Default(props) {
       </TouchableOpacity>
     )
   }
+  const Save = () => {
+    setTimeout(()=>{
+      AsyncStorageHelper.set("mtracker_data",JSON.stringify({data: state.data,pattern: state.pattern}));
+    },1000);
+  }
+
+  useEffect(() => {
+    if(!state.loaded){
+      let tmpState = JSON.parse(JSON.stringify(state));
+      AsyncStorageHelper.get("mtracker_data").then(result => {
+        if(result){
+          result = JSON.parse(result);
+          tmpState.pattern = result.pattern;
+          tmpState.data = result.data;
+          tmpState.loaded = true;
+          setState(tmpState);
+        }
+      });
+    } else if(!state.editing){
+      Save();
+    }
+
+  });
 
   let data = state.pattern.map((obj,index) => {
       return GetObj(obj,index);
@@ -143,21 +169,22 @@ export default function Default(props) {
     <View style={Styles.body}>
     <ScrollView style={Styles.wrapper} ref={scrollView} showsVerticalScrollIndicator ={false} showsHorizontalScrollIndicator={false}>
     <View style={{...Styles.paddingWrapper}}>
-      { data }
+      { data  }
+      { data.length == 0 && <Text styles={Styles.AddBtnOptionLabel}>Click the pen icon to add new objectives</Text>}
       </View>
     </ScrollView>
     <View style={Styles.datePicker}>
       <DateHeader/>
-    </View>
-    <View style={Styles.navigation}>
-      <Navigation/>
     </View>
     <TouchableOpacity onPress={() => ToggleEdit()} style={Styles.EditBtn}>
       <Icon size={30} source={state.editing ? Exit : Edit}/>
     </TouchableOpacity>
 
     {state.editing && (
-
+      <>
+      <SimpleAnimation duration={1000} aim="in" distance={1000} movementType="slide" direction="right" style={{position:'absolute',left: '17%',top: '75%',width: '66%',display:'flex',alignItems: 'center',backgroundColor: 'rgba(255,255,255,0.9)',borderRadius: 10,borderWidth: 1,borderColor:'black',borderStyle:'solid',padding: 5}}>
+      <Text style={{fontWeight: '700'}}>Add new objectives to your diary</Text>
+      </SimpleAnimation>
       <SimpleAnimation style={Styles.AddBtn} duration={1000} aim="in" distance={1000} movementType="slide" direction="left">
       <ScrollView style={{width: '100%',overflow: 'hidden',borderRadius: 25}} directionalLockEnabled horizontal   showsVerticalScrollIndicator ={false} showsHorizontalScrollIndicator={false}>
     <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('input')}>
@@ -173,11 +200,11 @@ export default function Default(props) {
     <Text style={Styles.AddBtnOptionLabel}>Range</Text>
     </TouchableOpacity>
     <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('vote')}>
-    <Icon size={30} source={Rainy}/>
+    <Icon size={30} source={Sunflower}/>
     <Text style={Styles.AddBtnOptionLabel}>Vote</Text>
     </TouchableOpacity>
     <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('range')}>
-    <Icon size={30} source={Bee}/>
+    <Icon size={30} source={Rainy}/>
     <Text style={Styles.AddBtnOptionLabel}>TBA</Text>
     </TouchableOpacity>
     <TouchableOpacity style={Styles.AddBtnOption} onPress={() => Add('range')}>
@@ -186,7 +213,9 @@ export default function Default(props) {
     </TouchableOpacity>
     </ScrollView>
     </SimpleAnimation>
+    </>
     )}
     </View>
+
   );
 }

@@ -18,9 +18,11 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
+    "react-native-chart-kit": "^6.6.1",
     "react-native-onboarding-swiper": "^1.1.4",
     "react-native-sass-transformer": "^1.4.0",
     "react-native-simple-animations": "^0.2.2",
+    "react-native-svg": "^12.1.0",
     "react-native-web": "~0.13.12",
     "time-stamp": "^2.2.0"
   },
